@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before action :find_recipe, except: %I[index new create]
 
   def index
-    @recipe = Recipe.all.order(created_at: desc)
+    @recipes = Recipe.all.order(created_at: :desc)
   end
 
   def show
