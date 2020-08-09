@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before action :find_recipe, except: %I[index new create]
+  before_action :find_recipe, only: [:show, :edit, :update, :destroy]
 
   def index
     @recipes = Recipe.all.order(created_at: :desc)
@@ -14,6 +14,12 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
+
+    if @recipe.save
+      redirect_to @recipe
+    else
+      render :new
+    end
   end
 
   def edit
