@@ -4,26 +4,19 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <strong><%= recipe.title %></strong><br> <small>by@</small> <small>User's handle</small>
+            <strong><%= link_to recipe.title, recipe_path(recipe) %></strong><br> <small>by@</small> <small>User's handle</small>
             <br>
             <%= recipe.description %>
           </p>
-
+        <div>
+        <% if local_assigns[:show]%>
           <footer class="card-footer">
             <div class="level-left">
-              <% if local_assigns[:show]%>
-                  <div class="icon-margins">
-                    <%= link_to recipes_path do %>
-                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                    <% end %>
-                  </div>
-                <% else %>
-                  <div class="icon-margins">
-                    <%= link_to recipe_path(recipe) do %>
-                    <i class="fas fa-eye" aria-hidden="true"></i>
-                    <% end %>
-                  </div>
-              <% end %>
+              <div class="icon-margins">
+                <%= link_to recipes_path do %>
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                <% end %>
+              </div>
               <div class="icon-margins">
                 <%= link_to edit_recipe_path(recipe) do %>
                 <i class="fas fa-edit" aria-hidden="true"></i>
@@ -38,9 +31,8 @@
               </div>
             </div>
           </footer>
-        </div>
+        <% end %>
       </div>
     </article>
   </div>
 </div>
-
