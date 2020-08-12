@@ -9,7 +9,7 @@
               <% @recipe.ingredients.each do |i| %>
               <li><%= i.substance %>
                 <%= link_to 'Edit', edit_recipe_ingredient_path(i.recipe, i) %>
-                <%= link_to 'Delete', recipe_ingredient_path(@recipe),
+                <%= link_to 'Delete', recipe_ingredient_path(i.recipe, i),
                 method: :delete,
                 data: { confirm: 'Are you shure you want to delete this ingredient?'} %>
               </li>

@@ -3,53 +3,56 @@
     <div class="column is-6 is-offset-3">
       <div class="content is-size-6">
         <% if recipe.errors.any? %>
-        <div id="error_explanation">
-          <h2>
-            <%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:
-          </h2>
-          <ul>
-            <% recipe.errors.full_messages.each do |message|%>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+          <div id="error_explanation">
+            <h2>
+              <%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:
+            </h2>
+            <ul>
+              <% recipe.errors.full_messages.each do |message|%>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
 
-          <%= form_with model: recipe, local: true do |form|%>
-              <div class="field">
-                <%= form.label heading, class: "label" %>
-                <div class="field">
-                  <div class="control">
-                   <%= form.text_field :title, class: "input", placeholder: "Title"  %>
-                  </div>
-                </div>
-                <div class="control">
-                  <%= form.text_area :description, class: "textarea", placeholder: "Description" %>
-                </div>
-              </div>
-
-                <div class="control">
-                  <h5>Ingredients</h5>
-                    <%= form.fields_for :ingredients do |ing_form| %>
-                      <%= render 'ing_form_fields', form: ing_form %>
-                    <% end %>
-                </div>
-
-
-
-
-
-
-
-            <div class="field is-grouped">
+        <%= form_with model: recipe, local: true do |form|%>
+          <div class="field">
+            <%= form.label heading, class: "label" %>
+            <div class="field">
               <div class="control">
-                  <%= form.submit class: "button is-light" %>
+                <%= form.text_field :title, class: "input", placeholder: "Title"  %>
               </div>
             </div>
-          <% end %>
-
-          <div class="control">
-              <%= link_to 'Cancel', cancel_path, class: "button is-white" %>
+            <div class="control">
+              <%= form.text_area :description, class: "textarea", placeholder: "Description" %>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <h5>Ingredients</h5>
+                <%= form.fields_for :ingredients do |ingredient_form| %>
+                  <%= render 'ingredient_form_fields', form: ingredient_form %>
+                <% end %>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <h5>Ingstructions</h5>
+                <%= form.fields_for :instructions do |instruction_form| %>
+                  <%= render 'instruction_form_fields', form: instruction_form %>
+                <% end %>
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+                <%= form.submit class: "button is-light" %>
+            </div>
+          </div>
+        <% end %>
+          <div class="field is-grouped">
+            <div class="control">
+                <%= link_to 'Cancel', cancel_path, class: "button is-white" %>
+            </div>
           </div>
       </div>
     </div>

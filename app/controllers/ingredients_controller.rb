@@ -1,7 +1,4 @@
 class IngredientsController < ApplicationController
-  def show
-  end
-
   def new
     @recipe = Recipe.find(params[:recipe_id])
     @ingredient = @recipe.ingredients.build
@@ -35,11 +32,10 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    ingredient = Ingredient.find_by(params[:id])
-    recipe = ingredient.recipe
-
+    ingredient = Ingredient.find(params[:id])
     ingredient.destroy
-    redirect_to recipe
+
+    redirect_to ingredient.recipe
   end
 
   private
@@ -47,5 +43,4 @@ class IngredientsController < ApplicationController
   def ingredient_params
     params.require(:ingredient).permit(:substance)
   end
-
 end
