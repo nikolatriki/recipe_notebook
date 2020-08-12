@@ -1,0 +1,12 @@
+<article class="media">
+  <div class="media-content">
+    <div class="content">
+      <h6>Instructions</h6>
+        <p>
+          <% @recipe.instructions.each do |i| %>
+            <%= i.step %>
+          <% end %>
+        </p>
+    <div>
+  </div>
+</article>

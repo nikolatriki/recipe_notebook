@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="column is-6 is-offset-3"><div class="box has-background-white-ter">
+    <article class="media">
+      <div class="media-content">
+        <div class="content">
+          <h6>Ingredients</h6>
+          <p>
+            <ul>
+              <% @recipe.ingredients.each do |i| %>
+              <li><%= i.substance %>
+                <%= link_to 'Edit', edit_recipe_ingredient_path(i.recipe, i) %>
+                <%= link_to 'Delete', recipe_ingredient_path(@recipe),
+                method: :delete,
+                data: { confirm: 'Are you shure you want to delete this ingredient?'} %>
+              </li>
+              <% end %>
+            </ul>
+          </p>
+          <footer class="card-footer">
+            <div class="level-left">
+              <div class="icon-margins">
+                <%= link_to new_recipe_ingredient_path(@recipe) do %>
+                <i class="fas fa-plus" aria-hidden="true"></i>
+                <% end %>
+              </div>
+            </div>
+          </footer>
+        <div>
+      </div>
+    </article>
+  </div>
+</div>

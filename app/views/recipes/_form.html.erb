@@ -28,6 +28,19 @@
                 </div>
               </div>
 
+                <div class="control">
+                  <h5>Ingredients</h5>
+                    <%= form.fields_for :ingredients do |ing_form| %>
+                      <%= render 'ing_form_fields', form: ing_form %>
+                    <% end %>
+                </div>
+
+
+
+
+
+
+
             <div class="field is-grouped">
               <div class="control">
                   <%= form.submit class: "button is-light" %>
