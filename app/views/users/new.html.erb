@@ -1,23 +1,22 @@
 <div class="container">
+  <% if @user.errors.any? %>
+  <div class="column is-6 is-offset-3">
+    <article class="message is-danger">
+      <div class="message-body">
+        <p>
+          <%= pluralize(@user.errors.count, 'error') %> prohibited this user from being saved:
+        </p><br>
+          <% @user.errors.full_messages.each do |elem|%>
+          <li><%= elem %></li>
+        <% end %>
+      </div>
+    </article>
+  </div>
+  <% end %>
   <div class="column is-6 is-offset-3"><div class="box has-background-white-ter">
     <div class="content">
-      <h5>New user</h5>
+      <h4>New user</h4>
     </div>
-    <% if @user.errors.any? %>
-      <div class="column is-6 is-offset-3">
-        <article class="message is-danger">
-          <div class="message-body">
-            <p>
-              <%= pluralize(@user.errors.count, 'error') %> prohibited this Article from being saved:
-            </p><br>
-              <% @user.errors.full_messages.each do |elem|%>
-              <li><%= elem %></li>
-            <% end %>
-          </div>
-        </article>
-      </div>
-    <% end %>
-
     <%= form_with model: @user, local: true do |form| %>
       <div class="field">
         <%= form.label :handle, class: "label"  %>

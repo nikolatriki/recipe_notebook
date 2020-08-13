@@ -4,10 +4,14 @@
       <div class="media-content">
         <div class="content">
           <h5><%= @user.fullname %></h5>
-          <h6><%= @user.handle %></h6>
-          <p><%= @user.email %></p>
+          <p> </p><br>
+          <p>Handle: <%= @user.handle %></p>
+          <i>email: <%= @user.email %></i>
+          <p> </p><br>
         </div>
       </div>
     </article>
+    <%= render 'footer' %>
   </div>
 </div>
+
