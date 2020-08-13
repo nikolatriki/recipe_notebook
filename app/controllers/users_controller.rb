@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def new
+    session_notice(:warning, 'You are already logged in!') if logged_in?
     @user = User.new
   end
 
@@ -7,6 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      log_in(@user)
       redirect_to @user
     else
       render :new

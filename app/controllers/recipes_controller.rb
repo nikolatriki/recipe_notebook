@@ -10,6 +10,7 @@ class RecipesController < ApplicationController
   end
 
   def new
+    session_notice(:danger, 'You must log in first!') unless logged_in?
     @recipe = Recipe.new
     5.times { @recipe.ingredients.build }
     5.times { @recipe.instructions.build }
@@ -17,6 +18,7 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params)
+    @recipe.user = current_user
 
     if @recipe.save
       redirect_to @recipe
@@ -26,6 +28,9 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    session_notice(:danger, 'You must log in first!') unless logged_in?
+    session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
+
   end
 
   def update
@@ -37,6 +42,9 @@ class RecipesController < ApplicationController
   end
 
   def destroy
+    session_notice(:danger, 'You must be logged in!') unless logged_in?
+    session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
+
     @recipe.destroy
 
     redirect_to root_path
