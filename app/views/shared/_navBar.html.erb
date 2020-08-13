@@ -17,15 +17,21 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a>
-                <%= link_to 'New recipe', new_recipe_path, class:"button is-black" %>
-              </a>
-              <a class="button is-light">
-                <strong><%= link_to 'Sign up', users_signup_path %></strong>
-              </a>
-              <a class="button is-light">
-                <strong>Log in</strong>
-              </a>
+              <% if logged_in? %>
+                <a>
+                  <%= link_to 'New recipe', new_recipe_path, class:"button is-black" %>
+                </a>
+                <a class="button is-light">
+                  <strong><%= link_to 'Log out', logout_path, method: :delete %></strong>
+                </a>
+              <% else %>
+                <a class="button is-light">
+                  <strong><%= link_to 'Sign up', users_signup_path %></strong>
+                </a>
+                <a class="button is-light">
+                  <strong><%= link_to 'Log in', login_path %></strong>
+                </a>
+              <% end %>
             </div>
           </div>
         </div>
