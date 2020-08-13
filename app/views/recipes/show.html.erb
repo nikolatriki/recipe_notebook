@@ -1,3 +1,8 @@
-<%= render @recipe, show: true %>
-<%= render 'ingredients/ingredient' %>
-<%= render 'instructions/instruction' %>
+<div class="container">
+  <div class="box has-background-white-ter">
+    <%= render @recipe, show: true %>
+    <%= render 'ingredients/ingredient' %>
+    <%= render 'instructions/instruction' %>
+    <%= render 'footer' %>
+  </div>
+</div>

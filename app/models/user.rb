@@ -23,6 +23,10 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: MINIMUM_PASSWORD_LENGTH }
 
+  def fullname
+    [first_name, last_name].join(' ')
+  end
+
   private
 
   def email_to_downcase
