@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="column is-6 is-offset-3"><div class="box has-background-white-ter">
+    <div class="content">
+      <h5>New user</h5>
+    </div>
+    <% if @user.errors.any? %>
+      <div class="column is-6 is-offset-3">
+        <article class="message is-danger">
+          <div class="message-body">
+            <p>
+              <%= pluralize(@user.errors.count, 'error') %> prohibited this Article from being saved:
+            </p><br>
+              <% @user.errors.full_messages.each do |elem|%>
+              <li><%= elem %></li>
+            <% end %>
+          </div>
+        </article>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, local: true do |form| %>
+      <div class="field">
+        <%= form.label :handle, class: "label"  %>
+        <div class="control">
+          <%= form.text_field :handle, class: "input", placeholder: "Handle name here"  %>
+        </div>
+      </div>
+      <div class="field">
+        <%= form.label :first_name, class: "label"  %>
+        <div class="control">
+          <%= form.text_field :first_name, class: "input", placeholder: "First name"  %>
+        </div>
+      </div>
+        <div class="field">
+        <%= form.label :last_name, class: "label"  %>
+        <div class="control">
+          <%= form.text_field :last_name, class: "input", placeholder: "Last name"  %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :email, class: "label" %>
+        <div class="control">
+            <%= form.email_field :email, class: "input", placeholder: "Email here"  %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :password, class: "label" %>
+        <div class="control">
+            <%= form.password_field :password, class: "input", placeholder: "Password here"  %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_confirmation, class: "label" %>
+        <div class="control">
+            <%= form.password_field :password_confirmation, class: "input", placeholder: "Confirm here"  %>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <%= form.submit 'submit', class: "button is-link"  %>
+        </div>
+        <div class="control">
+          <%= link_to 'Cancel', recipes_path, class: "button is-link is-light" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
