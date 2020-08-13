@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="column is-multiline">
+    <% flash.each do |name, message| %>
+
+      <div class="column is-8 is-offset-2">
+        <div class="notification has-text-centered is-<%= name %>">
+          <%= message %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
