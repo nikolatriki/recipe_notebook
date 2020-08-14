@@ -24,6 +24,9 @@
                 <a class="button is-light">
                   <strong><%= link_to 'Log out', logout_path, method: :delete %></strong>
                 </a>
+                <div class="navbar-item">
+                  <%= @current_user.handle %>
+                </div>
               <% else %>
                 <a class="button is-light">
                   <strong><%= link_to 'Sign up', users_signup_path %></strong>

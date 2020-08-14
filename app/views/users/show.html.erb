@@ -4,13 +4,19 @@
       <div class="media-content">
         <div class="content">
           <h5><%= @user.fullname %></h5>
-          <p> </p><br>
-          <p>Handle: <%= @user.handle %></p>
-          <i>email: <%= @user.email %></i>
-          <p> </p><br>
+          <p><small>handle: <%= @user.handle %></small><br>
+          <i><small>email: <%= @user.email %></small></i></p>
         </div>
       </div>
-    </article>
+    </article><br>
+    <p>Recipes created by <%= @user.handle %>:
+      <ul>
+        <% @user.recipes.each do |recipe| %>
+          <li><%= link_to recipe.title, recipe_path(recipe) %></li>
+      <% end %>
+      </ul>
+    </p>
+    <br>
     <%= render 'footer' %>
   </div>
 </div>

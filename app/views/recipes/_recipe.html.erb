@@ -9,7 +9,7 @@
             <% else %>
             <strong><%= recipe.title %></strong>
             <% end %>
-            <br> <small>by@user</small> <small>User's handle</small>
+            <br> <small><i>Recipe by</small></i> <small><%= link_to recipe.user.handle, user_path(recipe.user) %></small>
             <br>
             <%= recipe.description %>
           </p>
