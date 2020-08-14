@@ -1,10 +1,14 @@
 class IngredientsController < ApplicationController
+  before_action :find_ingredient, only: [ :edit, :update, :destroy]
+
   def new
     session_notice(:danger, 'You must be logged in to create ingredient!', login_path) unless logged_in?
+
     @recipe = Recipe.find(params[:recipe_id])
     @ingredient = @recipe.ingredients.build
+
     if logged_in?
-      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@ingredient.user)
+      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
     end
   end
 
@@ -22,15 +26,15 @@ class IngredientsController < ApplicationController
 
   def edit
     session_notice(:danger, 'You must be logged in to edit ingredient!', login_path) unless logged_in?
-    @ingredient = Ingredient.find(params[:id])
-    if logged_in?
-      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@ingredient.user)
-    end
+
     @recipe = @ingredient.recipe
+
+    if logged_in?
+      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
+    end
   end
 
   def update
-    @ingredient = Ingredient.find(params[:id])
     @recipe = @ingredient.recipe
 
     if @ingredient.update(ingredient_params)
@@ -42,11 +46,14 @@ class IngredientsController < ApplicationController
 
   def destroy
     session_notice(:danger, 'You must be logged in!', login_path) unless logged_in?
-    ingredient = Ingredient.find(params[:id])
-    if equal_with_current_user?(ingredient.user)
-      ingredient.destroy
 
-      redirect_to ingredient.recipe
+    recipe = @ingredient.recipe
+
+    if equal_with_current_user?(recipe.user)
+      @ingredient.destroy
+      flash[:info] = 'You have deleted an ingredient'
+
+      redirect_to recipe
     else
       session_notice(:danger, 'Wrong user!')
     end
@@ -56,5 +63,9 @@ class IngredientsController < ApplicationController
 
   def ingredient_params
     params.require(:ingredient).permit(:substance)
+  end
+
+  def find_ingredient
+    @ingredient = Ingredient.find(params[:id])
   end
 end

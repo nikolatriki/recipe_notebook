@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def new
     session_notice(:warning, 'You are already logged in!') if logged_in?
+
     @user = User.new
   end
 

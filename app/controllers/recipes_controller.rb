@@ -11,7 +11,9 @@ class RecipesController < ApplicationController
 
   def new
     session_notice(:danger, 'You must log in first!') unless logged_in?
+
     @recipe = Recipe.new
+
     5.times { @recipe.ingredients.build }
     5.times { @recipe.instructions.build }
   end
@@ -21,6 +23,8 @@ class RecipesController < ApplicationController
     @recipe.user = current_user
 
     if @recipe.save
+      flash[:success] = 'You have created a new recipe!'
+
       redirect_to @recipe
     else
       render :new
@@ -30,7 +34,6 @@ class RecipesController < ApplicationController
   def edit
     session_notice(:danger, 'You must log in first!') unless logged_in?
     session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
-
   end
 
   def update
@@ -46,6 +49,7 @@ class RecipesController < ApplicationController
     session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
 
     @recipe.destroy
+    flash[:info] = 'The recipe has been deleted!'
 
     redirect_to root_path
   end
