@@ -18,9 +18,9 @@ module SessionsHelper
     @current_user = nil
   end
 
-  def session_notice(type, message)
+  def session_notice(type, message, path = root_path)
     flash[type] = message
-    redirect_to root_path and return
+    redirect_to path
   end
 
   def equal_with_current_user?(some_user)
