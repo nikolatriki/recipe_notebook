@@ -4,7 +4,7 @@
       <div class="navbar-brand">
           <div class="navbar-brand">
            <strong>
-            <%= link_to 'recipe_notebook', root_path, class: "navbar-brand navbar-item is-family-secondary is-size-5" %>
+            <%= link_to 'recipe_notebook', root_path, class: "navbar-brand navbar-item is-family-secondary is-size-5 has-background-warning-dark has-text-white" %>
           </strong>
         </div>
         <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -19,7 +19,7 @@
             <div class="buttons">
               <% if logged_in? %>
                 <a>
-                  <%= link_to 'New recipe', new_recipe_path, class:"button is-black" %>
+                  <%= link_to 'New recipe', new_recipe_path, class:"button has-background-link-dark has-text-white" %>
                 </a>
                 <a class="button is-light">
                   <strong><%= link_to 'Log out', logout_path, method: :delete %></strong>

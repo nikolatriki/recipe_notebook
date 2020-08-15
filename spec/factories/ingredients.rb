@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :ingredient do
+    user
+    recipe
+
     substance { "MyString" }
-    recipe { nil }
   end
 end

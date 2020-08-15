@@ -1,8 +1,10 @@
 FactoryBot.define do
   factory :user do
-    handle { "MyString" }
-    email { "MyString" }
-    first_name { "MyString" }
-    last_name { "MyString" }
+    sequence(:email) { |n| "testing#{n}@test.com" }
+    sequence(:handle) { |h| "Chef #{h}" }
+    first_name { 'Jeffry' }
+    last_name { 'Lebowsky' }
+    password { '123456' }
+    password_confirmation { '123456' }
   end
 end
