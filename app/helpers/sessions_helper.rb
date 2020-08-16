@@ -20,7 +20,7 @@ module SessionsHelper
 
   def session_notice(type, message, path = root_path)
     flash[type] = message
-    redirect_to root_path and return
+    redirect_to path and return
   end
 
   def equal_with_current_user?(some_user)

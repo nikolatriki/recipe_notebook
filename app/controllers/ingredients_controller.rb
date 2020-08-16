@@ -1,9 +1,8 @@
 class IngredientsController < ApplicationController
   before_action :find_ingredient, only: [ :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
 
   def new
-    session_notice(:danger, 'You must be logged in to create ingredient!', login_path) unless logged_in?
-
     @recipe = Recipe.find(params[:recipe_id])
     @ingredient = @recipe.ingredients.build
 
@@ -18,6 +17,7 @@ class IngredientsController < ApplicationController
     @ingredient.user = current_user
 
     if @ingredient.save
+      flash[:info] = 'Added ingredient!'
       redirect_to @recipe
     else
       render :new
@@ -25,13 +25,7 @@ class IngredientsController < ApplicationController
   end
 
   def edit
-    session_notice(:danger, 'You must be logged in to edit ingredient!', login_path) unless logged_in?
-
     @recipe = @ingredient.recipe
-
-    if logged_in?
-      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
-    end
   end
 
   def update
@@ -45,13 +39,11 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    session_notice(:danger, 'You must be logged in!', login_path) unless logged_in?
-
     recipe = @ingredient.recipe
 
     if equal_with_current_user?(recipe.user)
       @ingredient.destroy
-      flash[:info] = 'You have deleted an ingredient'
+      flash[:info] = 'Deleted ingredient!'
 
       redirect_to recipe
     else
@@ -67,5 +59,12 @@ class IngredientsController < ApplicationController
 
   def find_ingredient
     @ingredient = Ingredient.find(params[:id])
+  end
+
+  def correct_user
+    unless equal_with_current_user?(@ingredient.recipe.user)
+      flash[:danger] = 'Wrong user!'
+      redirect_to(root_path)
+    end
   end
 end

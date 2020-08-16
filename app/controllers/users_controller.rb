@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login
+
   def new
     session_notice(:warning, 'You are already logged in!') if logged_in?
 

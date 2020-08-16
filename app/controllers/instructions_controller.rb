@@ -1,9 +1,8 @@
 class InstructionsController < ApplicationController
   before_action :find_instruction, only: [ :edit, :update, :destroy]
+  before_action :correct_user, only: [ :edit, :update]
 
   def new
-    session_notice(:danger, 'You must be logged in to create ingredient!', login_path) unless logged_in?
-
     @recipe = Recipe.find(params[:recipe_id])
     @instruction = @recipe.instructions.build
 
@@ -18,6 +17,7 @@ class InstructionsController < ApplicationController
     @instruction.user = current_user
 
     if @instruction.save
+      flash[:info] = 'Added instruction step!'
       redirect_to @recipe
     else
       render :new
@@ -25,13 +25,7 @@ class InstructionsController < ApplicationController
   end
 
   def edit
-    session_notice(:danger, 'You must be logged in to edit instruction!', login_path) unless logged_in?
-
     @recipe = @instruction.recipe
-
-    if logged_in?
-      session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
-    end
   end
 
   def update
@@ -45,12 +39,10 @@ class InstructionsController < ApplicationController
   end
 
   def destroy
-    session_notice(:danger, 'You must be logged in!', login_path) unless logged_in?
-
     recipe = @instruction.recipe
     if equal_with_current_user?(recipe.user)
       @instruction.destroy
-      flash[:info] = 'You have deleted an instruction step'
+      flash[:info] = 'Deleted instruction step!'
 
       redirect_to recipe
     else
@@ -66,5 +58,12 @@ class InstructionsController < ApplicationController
 
   def find_instruction
     @instruction = Instruction.find(params[:id])
+  end
+
+  def correct_user
+    unless equal_with_current_user?(@instruction.recipe.user)
+      flash[:danger] = 'Wrong user!'
+      redirect_to(root_path)
+    end
   end
 end

@@ -1,5 +1,7 @@
 class RecipesController < ApplicationController
+  skip_before_action :require_login, only: [:index, :show]
   before_action :find_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @recipes = Recipe.all.order(created_at: :desc)
@@ -10,8 +12,6 @@ class RecipesController < ApplicationController
   end
 
   def new
-    session_notice(:danger, 'You must log in first!') unless logged_in?
-
     @recipe = Recipe.new
 
     5.times { @recipe.ingredients.build }
@@ -23,7 +23,7 @@ class RecipesController < ApplicationController
     @recipe.user = current_user
 
     if @recipe.save
-      flash[:success] = 'You have created a new recipe!'
+      flash[:success] = 'New recipe!'
 
       redirect_to @recipe
     else
@@ -32,8 +32,6 @@ class RecipesController < ApplicationController
   end
 
   def edit
-    session_notice(:danger, 'You must log in first!') unless logged_in?
-    session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
   end
 
   def update
@@ -45,11 +43,8 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    session_notice(:danger, 'You must be logged in!') unless logged_in?
-    session_notice(:danger, 'Wrong user!') unless equal_with_current_user?(@recipe.user)
-
     @recipe.destroy
-    flash[:info] = 'The recipe has been deleted!'
+    flash[:info] = 'That recipe has been deleted!'
 
     redirect_to root_path
   end
@@ -65,5 +60,12 @@ class RecipesController < ApplicationController
 
   def find_recipe
     @recipe = Recipe.find(params[:id])
+  end
+
+  def correct_user
+    unless equal_with_current_user?(@recipe.user)
+      flash[:danger] = 'Wrong user!'
+      redirect_to(root_path)
+    end
   end
 end

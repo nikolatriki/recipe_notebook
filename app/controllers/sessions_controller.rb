@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login, only: [:new, :create]
+
   def new
-    session_notice(:warning, 'You are already logged in!') if logged_in?
+    # session_notice(:warning, 'You are already logged in!') if logged_in?
   end
 
   def create
@@ -18,6 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out
+    flash[:info] = "Goodbye!"
     redirect_to root_path
   end
 end
