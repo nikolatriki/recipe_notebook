@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "HomePages", type: :system do
+RSpec.describe "HomePages" do
   before do
     driven_by(:rack_test)
 
@@ -29,7 +29,7 @@ RSpec.describe "HomePages", type: :system do
     end
 
     it 'shows the New Recipe link' do
-      expecting = page.has_link?('New Recipe')
+      expecting = page.has_link?('New recipe')
 
       expect(expecting).to be true
     end
@@ -60,8 +60,5 @@ RSpec.describe "HomePages", type: :system do
       expect(page.has_link?(recipe.user.handle)).to be true
     end
 
-    # it 'shows the link to user' do
-    #   expect(page.has_link?(recipe.user.handle)).to be true
-    # end
   end
 end
