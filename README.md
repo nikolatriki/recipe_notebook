@@ -8,6 +8,14 @@ It serves as a final assignment work to the Ruby on Rails study group that I am 
 ### Technologies used
 * Ruby 2.6.6
 * Rails 6.0.3
+
+* Rspec- rails 4.0.0
+* Factory bot
+* Shoulda matchers
+
+* Bulma
+* Font Awesome
+
 * Sqlite3
 * Puma server
 
