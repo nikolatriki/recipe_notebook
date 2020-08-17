@@ -19,7 +19,7 @@
       <%= form_with model: [recipe, instruction], local: true do |form|%>
         <div class="field">
           <p class="control">
-            <%= form.text_area :step, class: "input", placeholder: 'Instruction step'%>
+            <%= form.text_area :step, class: "textarea", placeholder: 'Instruction step'%>
           </p>
         </div>
         <div class="field is-grouped">
