@@ -7,15 +7,15 @@
         <% end %>
       </div>
       <% if logged_in? && equal_with_current_user?(@recipe.user) %>
-        <div class="icon-margins">
-          <%= link_to edit_recipe_path(@recipe), class:"delete_link" do %>
+        <div class="icon-margins" >
+          <%= link_to edit_recipe_path(@recipe), id:"edit_link" do %>
             <i class="fas fa-edit"></i>
           <% end %>
         </div>
         <div class="icon-margins">
           <%= link_to recipe_path(@recipe),
           method: :delete,
-          data: { confirm: 'Are you shure you want to delete this recipe?'} do %>
+          data: { confirm: 'Are you shure you want to delete this recipe?'}, id:"delete_link" do %>
             <i class="fas fa-trash"></i>
           <% end %>
         </div>

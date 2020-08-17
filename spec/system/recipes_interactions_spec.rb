@@ -9,16 +9,8 @@ RSpec.describe "Recipes interactions" do
 
     visit root_path
 
-    user = create(:user)
+    log_in(create(:user))
 
-    click_on 'Log in'
-
-    within('form') do
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-
-      click_on 'submit'
-    end
     visit root_path
   end
 
@@ -54,7 +46,7 @@ RSpec.describe "Recipes interactions" do
       step = 'This is new instruction step'
       visit recipe_path(recipe)
 
-      click_on
+      find('edit_link').click
 
       within('form') do
         fill_in 'Title', with: title
@@ -67,6 +59,8 @@ RSpec.describe "Recipes interactions" do
 
       expect(page).to have_content(title)
       expect(page).to have_content(description)
+      expect(page).to have_content(substance)
+      expect(page).to have_content(step)
     end
   end
 
@@ -74,27 +68,9 @@ RSpec.describe "Recipes interactions" do
     it 'deletes the recipe' do
       visit recipe_path(recipe)
 
-      find('.icon-margins').click
+      find('delete_link').click
 
       expect(page).to have_content('New recipe')
     end
   end
-
-  # describe 'Creating new recipe ingredient' do
-  #   it 'creates new ingredient on recipe' do
-  #     substance = 'New ingredient substance'
-
-  #     visit recipe_path(recipe)
-
-  #     find('.icon-margins').click_on
-
-  #     within('form') do
-  #       fill_in 'Ingredient', with: substance
-
-  #       click_on 'Create ingredient'
-  #     end
-
-  #     expect(page).to have_content(substance)
-  #   end
-  # end
 end
