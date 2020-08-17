@@ -1,5 +1,6 @@
 class InstructionsController < ApplicationController
   before_action :find_instruction, only: [ :edit, :update, :destroy]
+  before_action :find_instruction_recipe, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [ :edit, :update]
 
   def new
@@ -25,12 +26,9 @@ class InstructionsController < ApplicationController
   end
 
   def edit
-    @recipe = @instruction.recipe
   end
 
   def update
-    @recipe = @instruction.recipe
-
     if @instruction.update(instruction_params)
       redirect_to @recipe
     else
@@ -39,12 +37,11 @@ class InstructionsController < ApplicationController
   end
 
   def destroy
-    recipe = @instruction.recipe
-    if equal_with_current_user?(recipe.user)
+    if equal_with_current_user?(@recipe.user)
       @instruction.destroy
       flash[:info] = 'Deleted instruction step!'
 
-      redirect_to recipe
+      redirect_to @recipe
     else
       session_notice(:danger, 'Wrong user!')
     end
@@ -58,6 +55,10 @@ class InstructionsController < ApplicationController
 
   def find_instruction
     @instruction = Instruction.find(params[:id])
+  end
+
+  def find_instruction_recipe
+    @recipe = @instruction.recipe
   end
 
   def correct_user

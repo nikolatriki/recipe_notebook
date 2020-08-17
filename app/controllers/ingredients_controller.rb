@@ -1,5 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :find_ingredient, only: [ :edit, :update, :destroy]
+  before_action :find_ingredient_recipe, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
 
   def new
@@ -25,12 +26,9 @@ class IngredientsController < ApplicationController
   end
 
   def edit
-    @recipe = @ingredient.recipe
   end
 
   def update
-    @recipe = @ingredient.recipe
-
     if @ingredient.update(ingredient_params)
       redirect_to @recipe
     else
@@ -39,13 +37,11 @@ class IngredientsController < ApplicationController
   end
 
   def destroy
-    recipe = @ingredient.recipe
-
-    if equal_with_current_user?(recipe.user)
+    if equal_with_current_user?(@recipe.user)
       @ingredient.destroy
       flash[:info] = 'Deleted ingredient!'
 
-      redirect_to recipe
+      redirect_to @recipe
     else
       session_notice(:danger, 'Wrong user!')
     end
@@ -59,6 +55,10 @@ class IngredientsController < ApplicationController
 
   def find_ingredient
     @ingredient = Ingredient.find(params[:id])
+  end
+
+  def find_ingredient_recipe
+    @recipe = @ingredient.recipe
   end
 
   def correct_user
