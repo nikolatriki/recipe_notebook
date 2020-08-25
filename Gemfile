@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # Assets
 gem 'font-awesome-sass', '~> 5.13'
+gem 'websocket-extensions', '~> 0.1.5'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
