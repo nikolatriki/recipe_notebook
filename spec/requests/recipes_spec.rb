@@ -95,14 +95,14 @@ RSpec.describe "Recipes" do
     context "when no user is logged in" do
       let(:recipe) { create(:recipe) }
 
-      it 'redirect back to root path' do
+      it 'redirect back to login path' do
         get "/recipes/#{recipe.id}/edit"
 
         expect(flash[:danger]).to eq 'You must log in first.'
         expect(response).to redirect_to(login_path)
       end
 
-      it 'redirect back to root when updating a recipe' do
+      it 'redirect back to login path when updating a recipe' do
         patch_params = {
           params: {
             recipe: {
@@ -153,7 +153,7 @@ RSpec.describe "Recipes" do
     context "when no user is logged in" do
       let(:recipe) { create(:recipe) }
 
-      it 'redirect back to root path' do
+      it 'redirect back to login path' do
         delete "/recipes/#{recipe.id}"
 
         expect(flash[:danger]).to eq 'You must log in first.'

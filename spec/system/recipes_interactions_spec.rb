@@ -9,9 +9,9 @@ RSpec.describe "Recipes interactions" do
 
     visit root_path
 
-    log_in(create(:user))
+    log_in(user)
 
-    visit root_path
+    # visit root_path
   end
 
   describe 'Creating a recipe' do
@@ -42,25 +42,18 @@ RSpec.describe "Recipes interactions" do
     it 'edits and shows the recipe' do
       title = 'New title'
       description = 'New description'
-      substance = 'This is new ingredient'
-      step = 'This is new instruction step'
       visit recipe_path(recipe)
 
-      find('edit_link').click
-
+      click_link('edit_link')
       within('form') do
         fill_in 'Title', with: title
         fill_in 'Description', with: description
-        fill_in 'recipe_ingredients_attributes_3_substance', with: substance
-        fill_in 'recipe_instructions_attributes_3_step', with: step
 
-        click_on 'Update recipe'
+        click_on 'Update Recipe'
       end
 
       expect(page).to have_content(title)
       expect(page).to have_content(description)
-      expect(page).to have_content(substance)
-      expect(page).to have_content(step)
     end
   end
 
@@ -68,8 +61,8 @@ RSpec.describe "Recipes interactions" do
     it 'deletes the recipe' do
       visit recipe_path(recipe)
 
-      find('delete_link').click
-
+      #find_by_id('#delete_link').click
+      click_link('delete_link')
       expect(page).to have_content('New recipe')
     end
   end
